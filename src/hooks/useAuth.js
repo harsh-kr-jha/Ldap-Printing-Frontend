@@ -53,7 +53,7 @@ export function useAuth() {
           .post(`http://127.0.0.1:8000/printing-api/auth/`, { code })
           .then((res) => {
             localStorage.setItem("userPrinter", res.data.token);
-            window.location.href = "http://127.0.0.1:8000/";
+            window.location.href = "http://localhost:3000/";
           })
           .catch((err) => {
             console.log(err);
