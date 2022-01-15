@@ -32,22 +32,7 @@ export function useAuth() {
   );
   const auth = React.useMemo(
     () => ({
-      login: async (token) => {
-        const { data } = await axios.post(
-          `http://localhost:3000/api/v1/admin-authenticate`,
-          {
-            token,
-          }
-        );
-
-        console.log(data.data.token);
-        const user = {
-          token: data.data.token,
-          user: data.data.user,
-        };
-        localStorage.setItem("userPrinter", JSON.stringify(user));
-        dispatch(createAction("SET_USER", user));
-      },
+      login: async (token) => {},
       logout: async () => {
         localStorage.removeItem("userPrinter");
         dispatch(createAction("REMOVE_USER"));
@@ -65,10 +50,10 @@ export function useAuth() {
         const code = window.location.search.split("=")[1];
 
         axios
-          .post(`https://itc.gymkhana.iitb.ac.in/printing-api/auth/`, { code })
+          .post(`http://127.0.0.1:8000/printing-api/auth/`, { code })
           .then((res) => {
             localStorage.setItem("userPrinter", res.data.token);
-            window.location.href = "https://itc.gymkhana.iitb.ac.in/printer/";
+            window.location.href = "http://127.0.0.1:8000/";
           })
           .catch((err) => {
             console.log(err);
@@ -76,7 +61,7 @@ export function useAuth() {
       }
     }
     axios
-      .post("https://itc.gymkhana.iitb.ac.in/printing-api/valid/", {
+      .post("http://127.0.0.1:8000/printing-api/valid/", {
         token: user,
       })
       .then((res) => {
